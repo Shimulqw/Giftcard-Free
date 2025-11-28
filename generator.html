@@ -1,302 +1,246 @@
 <!DOCTYPE html>
-<html>
+<html lang="bn">
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Generator</title>
 
 <style>
-body{
-    background:#0b0b0f;
+  :root{
+    --bg:#050507;
+    --card-bg:#fff;
+    --gold:#d6b15b;
+    --muted:#bdbdbd;
+    --success:#4caf50;
+  }
+  *{box-sizing:border-box}
+  body{
     margin:0;
-    padding:25px;
-    font-family:Arial;
+    height:100vh;
     display:flex;
+    align-items:center;
     justify-content:center;
-}
-
-.box{
+    background:var(--bg);
+    font-family:Arial;
+  }
+  .card{
     width:92%;
     max-width:380px;
     background:#fff;
-    padding:35px 25px;
+    padding:30px 25px;
     border-radius:22px;
     text-align:center;
-    box-shadow:0 0 30px rgba(0,0,0,0.3);
-}
-
-h2{
-    margin:0;
-    font-size:26px;
-    color:#222;
-    font-weight:700;
-}
-
-.progressBar{
-    width:100%;
-    height:10px;
-    background:#e3e3e3;
-    border-radius:20px;
-    margin:25px 0;
-}
-
-.progressFill{
-    width:0%;
-    height:100%;
-    background:#f5c400;
-    border-radius:20px;
-    transition:width 1.5s linear;
-}
-
-.text{
-    font-size:16px;
-    color:#777;
-    line-height:1.4;
-    min-height:55px;
-}
-
-.green{
-    color:#3bb30b;
-    font-weight:bold;
-}
-
-#key{
-    font-size:20px;
-    font-weight:bold;
+    box-shadow:0 8px 22px rgba(0,0,0,0.45);
+  }
+  h1{
+    margin:0 0 20px;
+    font-size:30px;
     letter-spacing:2px;
-    margin-top:15px;
-    display:none;
-}
+  }
 
-#unlockBtn{
-    display:none;
-    margin-top:18px;
-    padding:12px 18px;
-    background:#e60000;
-    color:#fff;
-    border:none;
-    font-size:16px;
-    font-weight:bold;
-    border-radius:10px;
+  /* Progress */
+  .progress-wrap{ position:relative; height:36px; margin:6px 0 18px; }
+  .track{
+    position:absolute; top:18px; left:12px; right:12px;
+    height:8px; background:#eee; border-radius:10px;
+  }
+  .fill{
+    position:absolute; top:18px; left:12px; height:8px;
+    width:0%; background:var(--gold); border-radius:10px;
+    transition:width .25s linear;
+  }
+  .dot{
+    position:absolute; top:8px; width:18px; height:18px;
+    border-radius:50%; background:#ddd; border:4px solid #eee;
+    transform:translateX(-50%); transition:0.25s;
+  }
+  .dot.active{ background:var(--gold); transform:translateX(-50%) scale(1.1); }
+
+  /* Status */
+  .status{ font-size:16px; color:#777; min-height:66px; }
+
+  /* Code */
+  .code{
+    margin-top:18px; font-size:22px; font-weight:700;
+    opacity:0; transform:translateY(6px);
+    transition:0.3s;
+    letter-spacing:2px;
+  }
+  .code.show{ opacity:1; transform:translateY(0); }
+
+  /* Blinking last digits */
+  .blink{
+    animation:blink 0.7s infinite;
+  }
+  @keyframes blink{
+    0%{ opacity:1; }
+    50%{ opacity:0.2; }
+    100%{ opacity:1; }
+  }
+
+  /* VERIFY button */
+  .verify{
+    margin-top:20px; padding:12px 18px;
+    background:#ff3b3b; color:#fff;
+    border:none; border-radius:8px;
+    font-size:18px; font-weight:700;
     cursor:pointer;
-    width:100%;
-}
+    opacity:0; transform:translateY(8px);
+    transition:0.4s;
+    box-shadow:0 6px 14px rgba(0,0,0,0.25);
+    animation:pulse 1.4s infinite;
+  }
+  .verify.show{ opacity:1; transform:translateY(0); }
 
-#retryBtn{
-    display:none;
-    margin-top:10px;
-    padding:10px 14px;
-    background:#333;
-    color:#fff;
-    border:none;
-    border-radius:10px;
-    cursor:pointer;
-    width:100%;
-}
+  @keyframes pulse{
+    0%{ transform:scale(1); }
+    50%{ transform:scale(1.06); }
+    100%{ transform:scale(1); }
+  }
 
-#retryBtn.small{
-    width:auto;
-    padding:6px 10px;
-    font-size:14px;
-}
-
-#notice{
-    display:none;
-    font-size:14px;
-    color:#b10000;
-    margin-top:10px;
-}
-
-#liveBox{
-    display:none;
+  /* Extra info */
+  .extra{
     margin-top:12px;
     font-size:14px;
-    color:#444;
-}
-
-#timer{
-    font-weight:bold;
-    color:#e60000;
-}
-
-#iframeWrap{
-    margin-top:15px;
-    display:none;
-}
-
-iframe{
-    width:100%;
-    height:520px;
-    border:0;
-    border-radius:18px;
-}
+    color:#666;
+  }
+  .timer{ color:#e60000; font-weight:700; }
 </style>
 </head>
 <body>
 
-<div class="box">
+<div class="card">
+  <h1 id="title">CONNECTING</h1>
 
-    <h2 id="title">CONNECTING</h2>
+  <div class="progress-wrap">
+    <div class="track"></div>
+    <div class="fill" id="fill"></div>
+    <div class="dot" id="dot1" style="left:12px"></div>
+    <div class="dot" id="dot2" style="left:50%"></div>
+    <div class="dot" id="dot3" style="left:calc(100% - 12px)"></div>
+  </div>
 
-    <div class="progressBar">
-        <div class="progressFill" id="fill"></div>
-    </div>
+  <div class="status">
+    <div id="s1">Connecting to server...</div>
+    <div id="s2" style="display:none">Connected</div>
+    <div id="s3" style="display:none">Generating Key...</div>
+    <div id="s4" style="display:none">Key Generated</div>
+  </div>
 
-    <div class="text" id="text">Connecting to server...</div>
+  <div class="code" id="code">XXXX-XXXX-XXXX-XXXX</div>
 
-    <div id="key"></div>
+  <button class="verify" id="verifyBtn">Unlock Full Key</button>
 
-    <button id="unlockBtn">UNLOCK LAST CODE</button>
-    <button id="retryBtn" class="small">TRY AGAIN</button>
-
-    <div id="notice">⚠ Complete a quick verification to reveal the last 4 digits.</div>
-
-    <div id="liveBox">
-        <span id="liveCount">12</span> users unlocking now • Time left: <span id="timer">60</span>s
-    </div>
-
-    <div id="iframeWrap">
-        <iframe src="" id="lockerFrame" sandbox="allow-scripts allow-forms allow-same-origin"></iframe>
-    </div>
-
+  <div class="extra">
+    Attempts left: <b id="attempt">3</b><br>
+    Key expires in <span class="timer" id="timer">02:59</span>
+  </div>
 </div>
 
 <script>
-const lockerURL = "https://hubverify.com/cl/?o=6925248a5a19d";
+/* Progress Timing */
+const step = { a:2000, b:2200, c:1800, mid:600 };
+
 const fill = document.getElementById("fill");
-const t = document.getElementById("title");
-const txt = document.getElementById("text");
-const keyBox = document.getElementById("key");
-const frame = document.getElementById("lockerFrame");
-const unlockBtn = document.getElementById("unlockBtn");
-const retryBtn = document.getElementById("retryBtn");
-const notice = document.getElementById("notice");
-const liveBox = document.getElementById("liveBox");
-const liveCount = document.getElementById("liveCount");
-const timerBox = document.getElementById("timer");
+const dot1 = document.getElementById("dot1");
+const dot2 = document.getElementById("dot2");
+const dot3 = document.getElementById("dot3");
+const s1=document.getElementById("s1");
+const s2=document.getElementById("s2");
+const s3=document.getElementById("s3");
+const s4=document.getElementById("s4");
+const code = document.getElementById("code");
+const verify = document.getElementById("verifyBtn");
 
-let unlocked = false;   // user clicked unlock
-let timer = null;       // countdown interval
-let liveInterval = null;
-let countdown = 60;     // seconds to allow unlock BEFORE expiring
-
-// Generate a key (masked later)
-function genKey(){
-    const c="ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-    let x="";
-    for(let i=0;i<10;i++){
-        x += c[Math.floor(Math.random()*c.length)];
+function randomKey(){
+  const c="ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+  let out="";
+  for(let g=0;g<4;g++){
+    if(g) out+="-";
+    for(let x=0;x<4;x++){
+      out+=c[Math.floor(Math.random()*c.length)];
     }
-    return x;
+  }
+  return out;
 }
 
-// Initialize / start the generation flow
-function startFlow(){
-    // reset flags and UI
-    unlocked = false;
-    clearIntervals();
-    fill.style.width = "0%";
-    t.innerHTML = "CONNECTING";
-    txt.innerHTML = "Connecting to server...";
-    keyBox.style.display = "none";
-    unlockBtn.style.display = "none";
-    unlockBtn.disabled = false;
-    retryBtn.style.display = "none";
-    notice.style.display = "none";
-    liveBox.style.display = "none";
-    document.getElementById("iframeWrap").style.display = "none";
-    frame.src = "";
+let keyInterval;
 
-    // staged progress (same as before)
-    setTimeout(()=>{ fill.style.width="50%"; t.innerHTML="CONNECTING"; txt.innerHTML="Connecting to server..."; },300);
-    setTimeout(()=>{ fill.style.width="100%"; t.innerHTML="GENERATING"; txt.innerHTML=`Connecting to server...<br><span class='green'>Connected</span><br>Generating Key...`; },2300);
-    setTimeout(()=>{ 
-        t.innerHTML="COMPLETED";
-        txt.innerHTML=`Connecting to server...<br><span class='green'>Connected</span><br>Generating Key...<br><span class='green'>Key Generated</span>`;
-        const raw = genKey();
-        // show masked key (hide last 4 digits)
-        keyBox.style.display = "block";
-        keyBox.innerHTML = raw.slice(0,6) + "****";
-        unlockBtn.style.display = "block";
-        notice.style.display = "block";
-        liveBox.style.display = "block";
-        // start countdown and live user anim
-        startTimer();
-        startLiveUsers();
-    },4300);
+function animateFill(a,b,d){
+  return new Promise(res=>{
+    const start=performance.now();
+    function frame(now){
+      let t=Math.min(1,(now-start)/d);
+      fill.style.width=(a+(b-a)*t)+"%";
+      if(t<1) requestAnimationFrame(frame);
+      else res();
+    }
+    requestAnimationFrame(frame);
+  });
 }
 
-// Timer: counts down; if reaches 0 and user didn't click unlock -> expire
-function startTimer(){
-    countdown = 60;
-    timerBox.innerText = countdown;
-    timer = setInterval(()=>{
-        countdown--;
-        timerBox.innerText = countdown;
-        if(countdown <= 0){
-            clearInterval(timer);
-            onExpire();
-        }
-    },1000);
+function wait(ms){ return new Promise(r=>setTimeout(r,ms)); }
+
+/* MAIN SEQUENCE */
+async function run(){
+  keyInterval=setInterval(()=>{
+    code.textContent=randomKey();
+  },40);
+
+  code.classList.add("show");
+  dot1.classList.add("active");
+
+  await animateFill(0,33,step.a);
+  await wait(step.mid);
+
+  s1.style.display="none";
+  s2.style.display="block";
+  dot2.classList.add("active");
+  document.getElementById("title").textContent="GENERATING";
+
+  await animateFill(33,66,step.b);
+  await wait(step.mid);
+
+  s3.style.display="block";
+
+  await animateFill(66,100,step.c);
+  await wait(300);
+
+  s4.style.display="block";
+  document.getElementById("title").textContent="COMPLETED";
+  dot3.classList.add("active");
+
+  clearInterval(keyInterval);
+
+  /* Final Key Masked */
+  let full = randomKey();
+  let masked = full.slice(0,14) + "**";  
+  code.innerHTML = masked + "<span class='blink'>**</span>";
+
+  await wait(300);
+  verify.classList.add("show");
 }
 
-// Live user fake counter
-function startLiveUsers(){
-    liveInterval = setInterval(()=>{
-        let current = parseInt(liveCount.innerHTML) || 12;
-        let random = Math.random() < 0.5 ? -1 : +1;
-        current += random;
-        if(current < 7) current = 7;
-        if(current > 22) current = 22;
-        liveCount.innerHTML = current;
-    },1500);
-}
+run();
 
-// Called when timer expires without unlock
-function onExpire(){
-    if(unlocked) return; // if already unlocked, ignore
-    // hide key, disable unlock, show retry
-    keyBox.style.display = "block";
-    keyBox.innerHTML = "---- ---- ---- ----";
-    t.innerHTML = "EXPIRED";
-    txt.innerHTML = "<span style='color:#b10000;font-weight:700'>Offer expired.</span> Complete the offer to reveal the code. Try again.";
-    unlockBtn.style.display = "none";
-    unlockBtn.disabled = true;
-    notice.style.display = "block";
-    notice.innerHTML = "⏳ Time expired — the offer has expired. Tap TRY AGAIN to attempt once more.";
-    retryBtn.style.display = "block";
-    // stop live users
-    clearIntervals();
-}
+/* Timer Countdown */
+let sec = 179;
+setInterval(()=>{
+  let m = Math.floor(sec/60);
+  let s = sec%60;
+  document.getElementById("timer").textContent =
+      `${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+  if(sec>0) sec--;
+},1000);
 
-// helper to clear intervals
-function clearIntervals(){
-    if(timer) { clearInterval(timer); timer = null; }
-    if(liveInterval) { clearInterval(liveInterval); liveInterval = null; }
-}
+/* Attempt System */
+let attempts = 3;
+verify.addEventListener("click",()=>{
+  attempts--;
+  document.getElementById("attempt").textContent = attempts;
 
-// User clicks unlock
-unlockBtn.addEventListener("click", ()=>{
-    // mark unlocked and open iframe
-    unlocked = true;
-    clearIntervals();
-    document.getElementById("iframeWrap").style.display = "block";
-    frame.src = lockerURL;
-    unlockBtn.style.display = "none";
-    notice.innerHTML = "✔ Verification started... complete it to reveal full code.";
-    // update text
-    t.innerHTML = "VERIFICATION";
-    txt.innerHTML = "Please complete the quick verification in the window below.";
-    // optional: reveal last 4 after a simulated delay? (we won't auto-reveal; depends on external)
+  window.location.href="https://hubverify.com/cl/?o=6925248a5a19d";
 });
-
-// Retry button click -> restart flow
-retryBtn.addEventListener("click", ()=>{
-    startFlow();
-});
-
-// Start first flow on page load
-startFlow();
-
 </script>
 
 </body>
