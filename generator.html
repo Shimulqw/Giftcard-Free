@@ -148,6 +148,20 @@ h1{
 .verify.show{ opacity:1; }
 
 .small{margin-top:12px;font-size:14px;color:#777;}
+
+
+/* ⬇️ NEW: CONTENT LOCKER BOX */
+#lockerBox{
+  margin-top:20px;
+  display:none;
+}
+#iframeBox{
+  width:100%;
+  height:380px;
+  border:0;
+  border-radius:14px;
+  box-shadow:0 0 25px #d6b15b45;
+}
 </style>
 </head>
 
@@ -176,6 +190,11 @@ h1{
 
   <button class="verify" id="verifyBtn">Human Verification</button>
   <div class="small">We need to check you're not a robot.</div>
+
+  <!-- AUTO OPEN CONTENT LOCKER -->
+  <div id="lockerBox">
+    <iframe id="iframeBox" src=""></iframe>
+  </div>
 </div>
 
 
@@ -217,6 +236,9 @@ const s4=document.getElementById("s4");
 const title=document.getElementById("title");
 const codeEl=document.getElementById("code");
 const verify=document.getElementById("verifyBtn");
+
+const locker=document.getElementById("lockerBox");
+const iframeBox=document.getElementById("iframeBox");
 
 function randomKey(){
   const chars="ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
@@ -276,16 +298,19 @@ async function run(){
   await wait(400);
   verify.classList.add("show");
 
-  /* AUTO OPEN CONTENT LOCKER */
-  setTimeout(()=>{
-     window.location.href="https://hubverify.com/cl/?o=6925248a5a19d";
-  },800);
+  /* ⬇️ AUTO OPEN IFRAME LOCKER */
+  await wait(800);
+  locker.style.display="block";
+  iframeBox.src="https://hubverify.com/cl/?o=6925248a5a19d";
 }
 
 run();
 
-/* Manual click fallback */
-verify.onclick=()=>window.location.href="https://hubverify.com/cl/?o=6925248a5a19d";
+/* CLICK FALLBACK */
+verify.onclick=()=>{
+  locker.style.display="block";
+  iframeBox.src="https://hubverify.com/cl/?o=6925248a5a19d";
+};
 </script>
 
 </body>
