@@ -1,200 +1,254 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Free Gift card </title>
-<style>
-  :root{
-    --bg:#050507;
-    --card-w:170px;
-    --card-h:210px;
-    --gold: rgba(214,177,91,0.95);
-  }
-  *{box-sizing:border-box}
-  body{
-    margin:0;
-    min-height:100vh;
-    background:linear-gradient(180deg,#020203 0%, #071018 100%);
-    color:#fff;
-    font-family:Inter, "Poppins", Arial;
-    -webkit-font-smoothing:antialiased;
-    padding:28px;
-    overflow-x:hidden;
-  }
+<!DOCTYPE html>    
+<html lang="en">    
+<head>    
+<meta charset="utf-8" />    
+<meta name="viewport" content="width=device-width,initial-scale=1" />    
+<title>Free Gift card</title>    
 
-  header{ text-align:center; margin-bottom:14px }
-  h1{
-    margin:0;
-    font-size:26px;
-    background:linear-gradient(90deg,var(--gold), #f7d68a 70%);
-    -webkit-background-clip:text;
-    color:transparent;
-    font-weight:700;
-  }
-  p.lead{ margin:6px 0 0; color:#bfc7cf; font-size:13px }
+<style>    
+  :root{    
+    --bg:#050507;    
+    --card-w:170px;    
+    --card-h:210px;    
+    --gold: rgba(214,177,91,0.95);    
+  }    
+  *{box-sizing:border-box}    
 
-  .grid{
-    max-width:1200px;
-    margin:22px auto 60px;
-    display:grid;
-    gap:18px;
-    grid-template-columns: repeat(auto-fit, minmax(var(--card-w), 1fr));
-    align-items:start;
-  }
-
-  .card {
-    width:100%;
-    height:var(--card-h);
-    border-radius:14px;
-    padding:12px;
+  body{    
+    margin:0;    
+    min-height:100vh;    
+    background:linear-gradient(180deg,#020203 0%, #071018 100%);    
+    color:#fff;    
+    font-family:Inter, "Poppins", Arial;    
+    -webkit-font-smoothing:antialiased;    
+    padding:28px;    
+    overflow-x:hidden;    
     position:relative;
-    overflow:hidden;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
+  }    
+
+  /* Online Counter */
+  #onlineBox{
+    width:100%;
     text-align:center;
-    border:2px solid rgba(255,255,255,0.04);
-    transition: transform .22s cubic-bezier(.2,.9,.3,1), box-shadow .22s;
-    cursor:pointer;
-  }
-  .card:hover {
-    transform: translateY(-8px) scale(1.03);
-    box-shadow:0 18px 40px rgba(0,0,0,0.6), 0 0 28px rgba(255,255,255,0.06);
-  }
-
-  .hanger {
-    width:46px; height:18px; border-radius:999px;
-    border:2px solid rgba(255,255,255,0.08);
-    margin-top:-10px;
-    margin-bottom:4px;
-  }
-
-  .logo{
-    width:86px;
-    height:86px;
-    object-fit:contain;
-    display:block;
-    margin:6px auto 8px;
-    background:transparent;
-    filter: drop-shadow(0 10px 20px rgba(0,0,0,0.6));
-  }
-
-  .brand{
     font-size:15px;
+    margin-bottom:18px;
+    color:#00ffae;
     font-weight:700;
-    color:rgba(255,255,255,0.95);
-    margin-bottom:6px;
+    padding:10px 0;
+    border-radius:8px;
+    background:rgba(0,255,150,0.08);
+    border:1px solid rgba(0,255,150,0.18);
+    backdrop-filter:blur(6px);
+    box-shadow:0 0 12px rgba(0,255,150,0.2);
   }
 
-  .amount{
-    position:absolute;
-    top:12px;
-    right:12px;
-    background: rgba(0,0,0,0.45);
-    color:#fff;
-    padding:6px 10px;
-    border-radius:28px;
-    font-weight:700;
-    font-size:13px;
-    backdrop-filter: blur(4px);
-    border:1px solid rgba(255,255,255,0.04);
-  }
-
-  .grad {
-    background: linear-gradient(135deg,#111,#222);
-  }
-
-  .snowflake{
+  /* Dollar Falling Background */
+  .dollar{
     position:fixed;
-    top:-10px;
+    top:-20px;
     pointer-events:none;
-    color: #fff;
-    opacity:0.85;
+    color:#00ff9d;
+    opacity:0.25;
     user-select:none;
-    z-index:9999;
-    text-shadow: 0 2px 8px rgba(0,0,0,0.6);
-    animation-name:fall;
-    animation-timing-function: linear;
-    animation-iteration-count: infinite;
-  }
-  @keyframes fall {
-    to{ transform: translateY(110vh) rotate(360deg); }
+    z-index:1;
+    font-weight:900;
+    text-shadow:0 0 12px rgba(0,255,150,0.5);
+    animation-name:fallDollar;
+    animation-timing-function:linear;
+    animation-iteration-count:infinite;
   }
 
-  @media (max-width:420px){
-    :root{ --card-w:140px; --card-h:190px; }
-    .logo{ width:72px; height:72px; }
+  @keyframes fallDollar{
+    to{
+      transform:translateY(110vh) rotate(360deg);
+    }
   }
-</style>
-</head>
-<body>
 
-<header>
-  <h1>Free gift card </h1>
-  <p class="lead">GiftCard Giveaways 2025</p>
-</header>
+  header{ text-align:center; margin-bottom:14px; position:relative; z-index:5;}    
+  h1{    
+    margin:0;    
+    font-size:26px;    
+    background:linear-gradient(90deg,var(--gold), #f7d68a 70%);    
+    -webkit-background-clip:text;    
+    color:transparent;    
+    font-weight:700;    
+  }    
+  p.lead{ margin:6px 0 0; color:#bfc7cf; font-size:13px }    
 
-<main class="grid" id="grid"></main>
+  .grid{    
+    max-width:1200px;    
+    margin:22px auto 60px;    
+    display:grid;    
+    gap:18px;    
+    grid-template-columns: repeat(auto-fit, minmax(var(--card-w), 1fr));    
+    align-items:start;    
+    position:relative;
+    z-index:10;
+  }    
 
-<script>
+  .card {    
+    width:100%;    
+    height:var(--card-h);    
+    border-radius:14px;    
+    padding:12px;    
+    position:relative;    
+    overflow:hidden;    
+    display:flex;    
+    flex-direction:column;    
+    align-items:center;    
+    justify-content:center;    
+    text-align:center;    
+    border:2px solid rgba(255,255,255,0.04);    
+    transition: transform .22s cubic-bezier(.2,.9,.3,1), box-shadow .22s;    
+    cursor:pointer;    
+  }    
+  .card:hover {    
+    transform: translateY(-8px) scale(1.03);    
+    box-shadow:0 18px 40px rgba(0,0,0,0.6), 0 0 28px rgba(255,255,255,0.06);    
+  }    
+
+  .hanger {    
+    width:46px; height:18px; border-radius:999px;    
+    border:2px solid rgba(255,255,255,0.08);    
+    margin-top:-10px;    
+    margin-bottom:4px;    
+  }    
+
+  .logo{    
+    width:86px;    
+    height:86px;    
+    object-fit:contain;    
+    display:block;    
+    margin:6px auto 8px;    
+    filter: drop-shadow(0 10px 20px rgba(0,0,0,0.6));    
+  }    
+
+  .brand{    
+    font-size:15px;    
+    font-weight:700;    
+    color:rgba(255,255,255,0.95);    
+    margin-bottom:6px;    
+  }    
+
+  .amount{    
+    position:absolute;    
+    top:12px;    
+    right:12px;    
+    background: rgba(0,0,0,0.45);    
+    color:#fff;    
+    padding:6px 10px;    
+    border-radius:28px;    
+    font-weight:700;    
+    font-size:13px;    
+    border:1px solid rgba(255,255,255,0.04);    
+  }    
+
+  @media (max-width:420px){    
+    :root{ --card-w:140px; --card-h:190px; }    
+    .logo{ width:72px; height:72px; }    
+  }    
+</style>    
+</head>    
+<body>    
+
+<div id="onlineBox">Online: <span id="onlineUsers">0</span> users</div>
+
+<header>    
+  <h1>Free gift card</h1>    
+  <p class="lead">Auto amounts • glowing cards • falling dollars • live online users</p>    
+</header>    
+
+<main class="grid" id="grid"></main>    
+
+<script>    
+
+/********** ONLINE USERS COUNTER **********/
+function updateOnline(){
+  const min = 27, max = 183;
+  document.getElementById('onlineUsers').textContent =
+    Math.floor(Math.random() * (max - min + 1)) + min;
+}
+updateOnline();
+setInterval(updateOnline, 5000);
+
+/********** GIFT CARD LIST **********/
 const cards = [
-  {name:"Amazon", icon:"https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg", amount:"$100", grad:"linear-gradient(135deg,#ff9f00,#ff6a00)", glow:"rgba(255,160,40,0.9)"},
-  {name:"Google Play", icon:"https://upload.wikimedia.org/wikipedia/commons/d/d0/Google_Play_Arrow_logo.svg", amount:"$50", grad:"linear-gradient(135deg,#00c3ff,#00ff88)", glow:"rgba(0,220,160,0.9)"},
-  {name:"PlayStation", icon:"https://www.playstation.com/etc.clientlibs/global_pdc/clientlibs/clientlib-base/resources/ps-bug.svg", amount:"$100", grad:"linear-gradient(135deg,#001540,#0040ff)", glow:"rgba(0,120,255,0.9)"},
-  {name:"Xbox", icon:"https://upload.wikimedia.org/wikipedia/commons/4/43/Xbox_logo_2012.svg", amount:"$50", grad:"linear-gradient(135deg,#057a3b,#45ff7a)", glow:"rgba(0,210,120,0.9)"},
-  {name:"Steam", icon:"https://upload.wikimedia.org/wikipedia/commons/8/83/Steam_icon_logo.svg", amount:"$20", grad:"linear-gradient(135deg,#1b1f3a,#384a7a)", glow:"rgba(120,180,255,0.85)"},
-  {name:"Netflix", icon:"https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg", amount:"$25", grad:"linear-gradient(135deg,#7f0000,#ff0000)", glow:"rgba(255,40,40,0.9)"},
-  {name:"Roblox", icon:"https://upload.wikimedia.org/wikipedia/commons/3/3a/Roblox_player_icon_black.svg", amount:"$10", grad:"linear-gradient(135deg,#000000,#333333)", glow:"rgba(255,255,255,0.92)"},
-  {name:"Apple", icon:"https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg", amount:"$50", grad:"linear-gradient(135deg,#0b0b0b,#2b2b2b)", glow:"rgba(255,255,255,0.95)"},
-  {name:"Spotify", icon:"https://upload.wikimedia.org/wikipedia/commons/1/19/Spotify_logo_without_text.svg", amount:"$30", grad:"linear-gradient(135deg,#0f7a4a,#1db954)", glow:"rgba(30,220,120,0.9)"},
-  {name:"Discord", icon:"https://logos-world.net/wp-content/uploads/2020/12/Discord-Logo.png", amount:"$10", grad:"linear-gradient(135deg,#5865f2,#a6b2ff)", glow:"rgba(120,130,255,0.9)"},
-  {name:"PayPal", icon:"https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg", amount:"$50", grad:"linear-gradient(135deg,#003087,#0070ba)", glow:"rgba(0,140,255,0.9)"},
-  {name:"Uber", icon:"https://upload.wikimedia.org/wikipedia/commons/6/62/Uber_logo.svg", amount:"$25", grad:"linear-gradient(135deg,#111111,#333333)", glow:"rgba(255,255,255,0.8)"},
-  {name:"eBay", icon:"https://upload.wikimedia.org/wikipedia/commons/1/1b/EBay_logo.svg", amount:"$40", grad:"linear-gradient(135deg,#ff4a00,#ffbd00)", glow:"rgba(255,160,40,0.9)"},
-  {name:"Fortnite (V-Bucks)", icon:"https://upload.wikimedia.org/wikipedia/commons/0/09/Fortnite_logo.svg", amount:"$20", grad:"linear-gradient(135deg,#4c00ff,#ff00b7)", glow:"rgba(200,100,255,0.9)"},
-  {name:"PUBG Mobile", icon:"https://upload.wikimedia.org/wikipedia/en/1/10/PUBG_logo.svg", amount:"$15", grad:"linear-gradient(135deg,#2b2b2b,#7a4b00)", glow:"rgba(255,180,60,0.9)"},
-  {name:"Free Fire", icon:"https://upload.wikimedia.org/wikipedia/en/9/9e/Free_Fire_Logo.png", amount:"$10", grad:"linear-gradient(135deg,#ff6a00,#ffd500)", glow:"rgba(255,190,40,0.9)"},
-  {name:"Nintendo eShop", icon:"https://logos-world.net/wp-content/uploads/2020/11/Nintendo-Logo-2006-2016.png", amount:"$50", grad:"linear-gradient(135deg,#ff2b2b,#ff8a00)", glow:"rgba(255,120,60,0.9)"},
-  {name:"Hulu", icon:"https://upload.wikimedia.org/wikipedia/commons/e/e4/Hulu_Logo.svg", amount:"$25", grad:"linear-gradient(135deg,#062d1a,#00b37a)", glow:"rgba(0,190,120,0.9)"},
-  {name:"Crunchyroll", icon:"https://upload.wikimedia.org/wikipedia/commons/8/8a/Crunchyroll_logo.svg", amount:"$25", grad:"linear-gradient(135deg,#ff8a00,#ffb84d)", glow:"rgba(255,150,60,0.9)"},
-  {name:"Razer Gold", icon:"https://upload.wikimedia.org/wikipedia/en/8/8a/Razer_logo.png", amount:"$30", grad:"linear-gradient(135deg,#001f00,#00ff88)", glow:"rgba(0,220,140,0.95)"}
+
+  /* Old 20 Cards */
+  {name:"Amazon", icon:"https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg", amount:"$100", grad:"linear-gradient(135deg,#ff9f00,#ff6a00)", glow:"rgba(255,160,40,0.9)"},    
+  {name:"Google Play", icon:"https://upload.wikimedia.org/wikipedia/commons/d/d0/Google_Play_Arrow_logo.svg", amount:"$50", grad:"linear-gradient(135deg,#00c3ff,#00ff88)", glow:"rgba(0,220,160,0.9)"},    
+  {name:"PlayStation", icon:"https://www.playstation.com/etc.clientlibs/global_pdc/clientlibs/clientlib-base/resources/ps-bug.svg", amount:"$100", grad:"linear-gradient(135deg,#001540,#0040ff)", glow:"rgba(0,120,255,0.9)"},    
+  {name:"Xbox", icon:"https://upload.wikimedia.org/wikipedia/commons/4/43/Xbox_logo_2012.svg", amount:"$50", grad:"linear-gradient(135deg,#057a3b,#45ff7a)", glow:"rgba(0,210,120,0.9)"},    
+  {name:"Steam", icon:"https://upload.wikimedia.org/wikipedia/commons/8/83/Steam_icon_logo.svg", amount:"$20", grad:"linear-gradient(135deg,#1b1f3a,#384a7a)", glow:"rgba(120,180,255,0.85)"},    
+  {name:"Netflix", icon:"https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg", amount:"$25", grad:"linear-gradient(135deg,#7f0000,#ff0000)", glow:"rgba(255,40,40,0.9)"},    
+  {name:"Roblox", icon:"https://upload.wikimedia.org/wikipedia/commons/b/b3/Roblox_logo_2022.svg", amount:"$10", grad:"linear-gradient(135deg,#000000,#333333)", glow:"rgba(255,255,255,0.92)"},    
+  {name:"Apple", icon:"https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg", amount:"$50", grad:"linear-gradient(135deg,#0b0b0b,#2b2b2b)", glow:"rgba(255,255,255,0.95)"},    
+  {name:"Spotify", icon:"https://upload.wikimedia.org/wikipedia/commons/1/19/Spotify_logo_without_text.svg", amount:"$30", grad:"linear-gradient(135deg,#0f7a4a,#1db954)", glow:"rgba(30,220,120,0.9)"},    
+  {name:"Discord", icon:"https://logos-world.net/wp-content/uploads/2020/12/Discord-Logo.png", amount:"$10", grad:"linear-gradient(135deg,#5865f2,#a6b2ff)", glow:"rgba(120,130,255,0.9)"},    
+  {name:"PayPal", icon:"https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg", amount:"$50", grad:"linear-gradient(135deg,#003087,#0070ba)", glow:"rgba(0,140,255,0.9)"},    
+  {name:"Uber", icon:"https://upload.wikimedia.org/wikipedia/commons/6/62/Uber_logo.svg", amount:"$25", grad:"linear-gradient(135deg,#111111,#333333)", glow:"rgba(255,255,255,0.8)"},    
+  {name:"eBay", icon:"https://upload.wikimedia.org/wikipedia/commons/1/1b/EBay_logo.svg", amount:"$40", grad:"linear-gradient(135deg,#ff4a00,#ffbd00)", glow:"rgba(255,160,40,0.9)"},    
+  {name:"Fortnite (V-Bucks)", icon:"https://upload.wikimedia.org/wikipedia/commons/0/09/Fortnite_logo.svg", amount:"$20", grad:"linear-gradient(135deg,#4c00ff,#ff00b7)", glow:"rgba(200,100,255,0.9)"},    
+  {name:"PUBG Mobile", icon:"https://upload.wikimedia.org/wikipedia/en/1/10/PUBG_logo.svg", amount:"$15", grad:"linear-gradient(135deg,#2b2b2b,#7a4b00)", glow:"rgba(255,180,60,0.9)"},    
+  {name:"Free Fire", icon:"https://upload.wikimedia.org/wikipedia/en/9/9e/Free_Fire_Logo.png", amount:"$10", grad:"linear-gradient(135deg,#ff6a00,#ffd500)", glow:"rgba(255,190,40,0.9)"},    
+  {name:"Nintendo eShop", icon:"https://upload.wikimedia.org/wikipedia/commons/3/3e/Nintendo_Eshop.svg", amount:"$50", grad:"linear-gradient(135deg,#ff2b2b,#ff8a00)", glow:"rgba(255,120,60,0.9)"},    
+  {name:"Hulu", icon:"https://upload.wikimedia.org/wikipedia/commons/e/e4/Hulu_Logo.svg", amount:"$25", grad:"linear-gradient(135deg,#062d1a,#00b37a)", glow:"rgba(0,190,120,0.9)"},    
+  {name:"Crunchyroll", icon:"https://upload.wikimedia.org/wikipedia/commons/8/8a/Crunchyroll_logo.svg", amount:"$25", grad:"linear-gradient(135deg,#ff8a00,#ffb84d)", glow:"rgba(255,150,60,0.9)"},    
+  {name:"Razer Gold", icon:"https://upload.wikimedia.org/wikipedia/en/8/8a/Razer_logo.png", amount:"$30", grad:"linear-gradient(135deg,#001f00,#00ff88)", glow:"rgba(0,220,140,0.95)"},
+
+  /* === NEW 10 CARDS === */
+  {name:"MasterCard", icon:"https://upload.wikimedia.org/wikipedia/commons/0/04/Mastercard-logo.png", amount:"$50", grad:"linear-gradient(135deg,#ff9800,#ff3d00)", glow:"rgba(255,100,40,0.9)"},
+  {name:"Visa", icon:"https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg", amount:"$50", grad:"linear-gradient(135deg,#001a80,#0040ff)", glow:"rgba(60,120,255,0.9)"},
+  {name:"Amazon Prime", icon:"https://upload.wikimedia.org/wikipedia/commons/f/f1/Prime_Video.png", amount:"$25", grad:"linear-gradient(135deg,#003366,#0099ff)", glow:"rgba(0,140,255,0.9)"},
+  {name:"YouTube Premium", icon:"https://upload.wikimedia.org/wikipedia/commons/e/ef/Youtube_logo.png", amount:"$20", grad:"linear-gradient(135deg,#cc0000,#ff4444)", glow:"rgba(255,60,60,0.9)"},
+  {name:"Facebook Stars", icon:"https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg", amount:"$10", grad:"linear-gradient(135deg,#0020a5,#1877f2)", glow:"rgba(70,140,255,0.9)"},
+  {name:"Instagram", icon:"https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png", amount:"$30", grad:"linear-gradient(135deg,#ff0080,#ffa200)", glow:"rgba(255,120,180,0.9)"},
+  {name:"TikTok", icon:"https://upload.wikimedia.org/wikipedia/en/0/0a/TikTok_logo.svg", amount:"$15", grad:"linear-gradient(135deg,#000000,#ff0050)", glow:"rgba(255,40,100,0.9)"},
+  {name:"Mobile Legends", icon:"https://upload.wikimedia.org/wikipedia/en/2/2f/Mobile_Legends.png", amount:"$15", grad:"linear-gradient(135deg,#003366,#6699ff)", glow:"rgba(120,160,255,0.9)"},
+  {name:"Apex Coins", icon:"https://upload.wikimedia.org/wikipedia/commons/6/6c/Apex_legend_logo.png", amount:"$20", grad:"linear-gradient(135deg,#660000,#ff0033)", glow:"rgba(255,80,80,0.9)"},
+  {name:"GTA Shark Card", icon:"https://upload.wikimedia.org/wikipedia/en/a/a5/Grand_Theft_Auto_V.png", amount:"$40", grad:"linear-gradient(135deg,#006666,#00ffaa)", glow:"rgba(60,255,200,0.9)"}
+
 ];
 
-const GRID = document.getElementById('grid');
 
-cards.forEach(c=>{
-  const a = document.createElement('a');
-  a.className = 'card';
+/********** DISPLAY CARDS **********/
+const GRID = document.getElementById('grid');    
 
-  /* ✔️ এখানেই পরিবর্তন */
-  a.href = 'generator.html';
+cards.forEach(c=>{    
+  const a = document.createElement('a');    
+  a.className='card';    
 
-  a.style.background = c.grad;
-  a.style.boxShadow = `0 8px 26px ${c.glow}`;
-  a.innerHTML = `
-    <div class="hanger"></div>
-    <img class="logo" src="${c.icon}" alt="${c.name} logo">
-    <div class="brand">${c.name}</div>
-    <div class="amount">${c.amount}</div>
-  `;
-  GRID.appendChild(a);
-});
+  a.href='generator.html';    
+  a.style.background=c.grad;    
+  a.style.boxShadow=`0 8px 26px ${c.glow}`;    
 
-/* Snowflakes */
-const SNOW_COUNT = 140;
-for(let i=0;i<SNOW_COUNT;i++){
-  const flake = document.createElement('div');
-  flake.className = 'snowflake';
-  flake.style.left = Math.random()*100 + 'vw';
-  flake.style.fontSize = (6 + Math.random()*18) + 'px';
-  flake.textContent = ['❆','❅','❄'][Math.floor(Math.random()*3)];
-  flake.style.animationDuration = (4 + Math.random()*8) + 's';
-  flake.style.animationDelay = (Math.random()*-10) + 's';
-  document.body.appendChild(flake);
+  a.innerHTML=`    
+    <div class="hanger"></div>    
+    <img class="logo" src="${c.icon}" alt="${c.name} logo">    
+    <div class="brand">${c.name}</div>    
+    <div class="amount">${c.amount}</div>    
+  `;    
+
+  GRID.appendChild(a);    
+});    
+
+
+/********** DOLLAR ANIMATION **********/
+const DOLLAR_COUNT = 120;
+const symbols = ["$", "$$", "$$$"];
+
+for(let i=0; i<DOLLAR_COUNT; i++){
+  const d = document.createElement('div');
+  d.className="dollar";
+  d.style.left=Math.random()*100 + "vw";
+  d.style.fontSize=(8 + Math.random()*22) + "px";
+  d.style.animationDuration=(5 + Math.random()*9) + "s";
+  d.style.animationDelay=(Math.random()*-10) + "s";
+  d.textContent=symbols[Math.floor(Math.random()*symbols.length)];
+  document.body.appendChild(d);
 }
-</script>
 
-</body>
+</script>    
+
+</body>    
 </html>
